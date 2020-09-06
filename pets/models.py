@@ -56,6 +56,9 @@ class Pets(models.Model):
     def get_absolute_url(self):
         return reverse("pets_detail", kwargs={"slug": self.url})
 
+    def get_review(self):
+        return self.reviewworkers_set.filter(parent__isnull=True)
+
     class Meta:
         verbose_name = "Питомец"
         verbose_name_plural = "Питомцы"
