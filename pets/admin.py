@@ -1,9 +1,21 @@
+from django import forms
 from django.contrib import admin
 
 # Register your models here.
 from django.utils.safestring import mark_safe
 
 from .models import Category, Pets, PetShots, Breeds, ReviewWorkers
+
+
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+
+
+class PostAdminForm(forms.ModelForm):
+    description = forms.CharField(label="Описание", widget=CKEditorUploadingWidget())
+
+    class Meta:
+        model = Pets
+        fields = '__all__'
 
 
 @admin.register(Category)
@@ -37,6 +49,7 @@ class PetsAdmin(admin.ModelAdmin):
     save_on_top = True
     save_as = True
     list_editable = ("draft", )
+    form = PostAdminForm
     readonly_fields = ("get_image", )
     fieldsets = (
         (None, {
