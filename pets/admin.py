@@ -1,6 +1,8 @@
 from django.contrib import admin
 
 # Register your models here.
+from django.utils.safestring import mark_safe
+
 from .models import Category, Pets, PetShots, Breeds, ReviewWorkers
 
 
@@ -16,18 +18,29 @@ class ReviewInline(admin.TabularInline):
     readonly_fields = ("name", "email")
 
 
+class PetShotsInline(admin.TabularInline):
+    model = PetShots
+    extra = 1
+    readonly_fields = ("get_image", )
+
+    def get_image(self, obj):
+        return mark_safe(f'<img src={obj.image.url} width="65" height="80"')
+    get_image.short_description = "Фото"
+
+
 @admin.register(Pets)
 class PetsAdmin(admin.ModelAdmin):
     list_display = ("name", "category", "url", "draft")
     list_filter = ("category", "date_in_shelter")
     search_fields = ("name", "category__scientific_name")
-    inlines = [ReviewInline]
+    inlines = [PetShotsInline, ReviewInline]
     save_on_top = True
     save_as = True
     list_editable = ("draft", )
+    readonly_fields = ("get_image", )
     fieldsets = (
         (None, {
-            "fields": (("name", "photo"), )
+            "fields": ("name", ("photo", "get_image"), )
         }),
         (None, {
             "fields": ("breed", )
@@ -47,21 +60,32 @@ class PetsAdmin(admin.ModelAdmin):
         }),
 
     )
-    # fields = (("breed", ), )
+
+    def get_image(self, obj):
+        return mark_safe(f'<img src={obj.photo.url} width="170" height="170"')
+    get_image.short_description = "Фото"
 
 
 @admin.register(ReviewWorkers)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ("name", "email", "parent", "pet", "id")
-    readonly_fields = ("name", "email")
+    readonly_fields = ("name", "email", )
 
 
 @admin.register(PetShots)
 class PetShotsAdmin(admin.ModelAdmin):
-    list_display = ("title", "description", "image", "pet")
+    list_display = ("title", "description", "image", "pet", "get_image")
+    readonly_fields = ("get_image", )
+
+    def get_image(self, obj):
+        return mark_safe(f'<img src={obj.image.url} width="65" height="80"')
+    get_image.short_description = "Фото"
 
 
 @admin.register(Breeds)
 class BreedsAdmin(admin.ModelAdmin):
     list_display = ("name", "description", "url")
 
+
+admin.site.site_title = 'Django Pets'
+admin.site.site_header = 'Django Pets'
