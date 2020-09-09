@@ -83,15 +83,19 @@
         </div>
 
         <div class="row sub-para-w3layouts mt-5">
-
-            <h4 class="shop-sing editContent" style="outline: none; cursor: inherit;">
-                О питомце:
-            </h4>
             <p>
                 {% for image in pets.petshots_set.all %}
                     <img src="{{ image.image.url }}" class="img-pet-shots" alt="{{ image.description }}">
                 {% endfor %}
             </p>
+        </div>
+
+        <div class="row sub-para-w3layouts mt-5">
+
+            <h4 class="shop-sing editContent" style="outline: none; cursor: inherit;">
+                О питомце:
+            </h4>
+
             <ul>
                 <li style="list-style: none">
                     {{ pets.description|safe }}
