@@ -90,29 +90,25 @@
             </p>
         </div>
 
+        <div class="sub-para-w3layouts mt-5" style="margin-left: -15px;">
+
+            <h4>
+                О питомце:
+            </h4>
+            <p class="editContent">
+                {{ pets.description|safe }}
+            </p>
+        </div>
         <div class="row sub-para-w3layouts mt-5">
 
             <h4 class="shop-sing editContent" style="outline: none; cursor: inherit;">
-                О питомце:
-            </h4>
-
-            <ul>
-                <li style="list-style: none">
-                    {{ pets.description|safe }}
-                </li>
-            </ul>
-            <h4 class="shop-sing editContent" style="outline: none; cursor: inherit;">
                 О породе:
             </h4>
-            {#                <li style="list-style: none">#}
-
-            {% for breed in pets.breed.all %}
-                {{ breed.description }}
-            {% endfor %}
-            {#                </li>#}
-            {#            </ul>#}
+            <p>{% for breed in pets.breed.all %}
+                    {{ breed.description }}
+                {% endfor %}
+            </p>
         </div>
-        <hr>
         <div class="row">
             <div class="single-form-left">
                 <!-- contact form grid -->
