@@ -24,6 +24,7 @@ class Category(models.Model):
 class Breeds(models.Model):
     """Породы"""
     name = models.CharField("Название породы", max_length=100)
+    category = models.ManyToManyField(Category, verbose_name="категории")
     description = models.TextField("Особенности")
     url = models.SlugField(max_length=160, unique=True)
 
