@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 
-from .models import Pets
+from .models import Pets, Category
 from .forms import ReviewForm
 
 
@@ -12,7 +12,6 @@ class PetsView(ListView):
     """Список питомцев"""
     model = Pets
     queryset = Pets.objects.filter(draft=False)
-    # template_name = "pets/pets_list.html"
 
 
 class PetDetailView(DetailView):
