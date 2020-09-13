@@ -7,10 +7,12 @@ from django.utils.safestring import mark_safe
 from .models import Category, Pets, PetShots, Breeds, ReviewWorkers, Rating, RatingStar
 
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from modeltranslation.admin import TranslationAdmin
 
 
 class PostAdminForm(forms.ModelForm):
-    description = forms.CharField(label="Описание", widget=CKEditorUploadingWidget())
+    description_ru = forms.CharField(label="Описание", widget=CKEditorUploadingWidget())
+    description_en = forms.CharField(label="Описание", widget=CKEditorUploadingWidget())
 
     class Meta:
         model = Pets
@@ -18,7 +20,7 @@ class PostAdminForm(forms.ModelForm):
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(TranslationAdmin):
     list_display = ("id", "scientific_name", "url")
     list_display_links = ("scientific_name", )
 
@@ -40,7 +42,7 @@ class PetShotsInline(admin.TabularInline):
 
 
 @admin.register(Pets)
-class PetsAdmin(admin.ModelAdmin):
+class PetsAdmin(TranslationAdmin):
     list_display = ("name", "category", "url", "draft")
     list_filter = ("category", "date_in_shelter")
     search_fields = ("name", "category__scientific_name")
@@ -111,7 +113,7 @@ class ReviewAdmin(admin.ModelAdmin):
 
 
 @admin.register(PetShots)
-class PetShotsAdmin(admin.ModelAdmin):
+class PetShotsAdmin(TranslationAdmin):
     list_display = ("title", "description", "image", "pet", "get_image")
     readonly_fields = ("get_image", )
 
@@ -121,7 +123,7 @@ class PetShotsAdmin(admin.ModelAdmin):
 
 
 @admin.register(Breeds)
-class BreedsAdmin(admin.ModelAdmin):
+class BreedsAdmin(TranslationAdmin):
     list_display = ("name", "description", "url")
 
 

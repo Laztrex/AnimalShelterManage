@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -24,6 +23,7 @@ try:
     from secret_key_file import SECRET_KEY
 except ImportError:
     from django.utils.crypto import get_random_string
+
     SECRET_KEY = get_random_string(50, 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
     with open(os.path.join(BASE_DIR, 'secret_key_file.py'), 'w') as key_file:
         key_file.write(f"SECRET_KEY = '{SECRET_KEY}'")
@@ -33,10 +33,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.auth',
     'django.contrib.admin',
     'django.contrib.contenttypes',
@@ -88,7 +88,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'AnimalShelterManage.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -98,7 +97,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),  # BASE_DIR / '
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -118,7 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -132,6 +129,15 @@ USE_L10N = True
 
 USE_TZ = True
 
+gettext = lambda s: s
+LANGUAGES = (
+    ('ru', gettext('Russia')),
+    ('en', gettext('English')),
+)
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -143,7 +149,6 @@ STATICFILES_DIRS = [STATIC_DIR]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 
@@ -194,7 +199,7 @@ CKEDITOR_CONFIGS = {
         # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage', # the upload image feature
+            'uploadimage',  # the upload image feature
             # your extra plugins here
             'div',
             'autolink',
@@ -212,7 +217,6 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
-
 
 RECAPTCHA_PUBLIC_KEY = '6LfDv8sZAAAAAHcrnMv9WhqwH9CHnc6EzM2K-Ey3'
 RECAPTCHA_PRIVATE_KEY = '6LfDv8sZAAAAANiDKhbAVXfY_VEMSh0RIXTfYxLj'
