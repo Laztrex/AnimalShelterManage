@@ -4,8 +4,7 @@ from django.contrib import admin
 # Register your models here.
 from django.utils.safestring import mark_safe
 
-from .models import Category, Pets, PetShots, Breeds, ReviewWorkers
-
+from .models import Category, Pets, PetShots, Breeds, ReviewWorkers, Rating, RatingStar
 
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
@@ -125,6 +124,13 @@ class PetShotsAdmin(admin.ModelAdmin):
 class BreedsAdmin(admin.ModelAdmin):
     list_display = ("name", "description", "url")
 
+
+@admin.register(Rating)
+class RatingAdmin(admin.ModelAdmin):
+    list_display = ("star", "pet", "ip")
+
+
+admin.site.register(RatingStar)
 
 admin.site.site_title = 'Django Pets'
 admin.site.site_header = 'Django Pets'

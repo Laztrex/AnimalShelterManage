@@ -80,6 +80,31 @@ class PetShots(models.Model):
         verbose_name_plural = "Фото питомцев"
 
 
+class RatingStar(models.Model):
+    value = models.SmallIntegerField("Значение", default=0)
+
+    def __str__(self):
+        return f'{self.value}'
+
+    class Meta:
+        verbose_name = "Звезда рейтинга"
+        verbose_name_plural = "Звёзды рейтинга"
+        ordering = ["-value"]
+
+
+class Rating(models.Model):
+    ip = models.CharField("IP адрес", max_length=15)
+    star = models.ForeignKey(RatingStar, on_delete=models.CASCADE, verbose_name="звезда")
+    pet = models.ForeignKey(Pets, on_delete=models.CASCADE, verbose_name="питомец")
+
+    def __str__(self):
+        return f"{self.star} - {self.pet}"
+
+    class Meta:
+        verbose_name = "Рейтинг"
+        verbose_name_plural = "Рейтинги"
+
+
 class ReviewWorkers(models.Model):
     """Отзывы сотрудников приюта"""
     email = models.EmailField()
