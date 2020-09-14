@@ -56,6 +56,8 @@ INSTALLED_APPS = [
 
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.vk',
 ]
 
 MIDDLEWARE = [
@@ -136,7 +138,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1  # кол-во дней до подтверждения email
+ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_REDIRECT_URL = '/'
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'  # пока временно крутится в консоли
+
 
 gettext = lambda s: s
 LANGUAGES = (
